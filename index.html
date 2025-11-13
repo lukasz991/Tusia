@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kobiecy Instinct — Pink Quantum Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+<style>
+:root{--pink:#ff69b4;--pink-light:#ffb7d9;--text-light:#ffffff;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:url("https://xatimg.com/image/2vtwoK63F9fA.gif")center/cover no-repeat fixed;font-family:"Inter",sans-serif;color:var(--text-light);overflow:hidden;}
+.profile-card{width:420px;padding:30px 30px 26px 30px;border-radius:28px;background:rgba(40,0,60,0.45);border:1px solid rgba(255,182,216,0.7);backdrop-filter:blur(16px);text-align:center;box-shadow:0 0 45px rgba(255,105,180,0.55);}
+.avatar-orbit{position:relative;width:220px;height:220px;margin:0 auto 20px;display:flex;justify-content:center;align-items:center;}
+#neon-ring{position:absolute;top:0;left:0;width:220px;height:220px;pointer-events:none;z-index:1;}
+.avatar-wrapper{position:relative;width:160px;height:160px;border-radius:50%;overflow:hidden;border:4px solid var(--pink-light);background:radial-gradient(circle,rgba(255,255,255,0.12),rgba(0,0,0,0.6));box-shadow:0 0 30px rgba(255,105,180,0.85);z-index:2;}
+.avatar-wrapper img{width:100%;height:100%;object-fit:cover;}
+.title{font-size:30px;font-weight:700;margin-bottom:4px;color:#fff;background:linear-gradient(120deg,#ffffff,#ffd0f0,#ff8fe0,#ffffff);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 6s ease-in-out infinite;text-shadow:0 0 10px rgba(255,150,230,0.7),0 0 25px rgba(140,107,255,0.4);}
+@keyframes shine{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+.heart{color:#ff7dee;text-shadow:0 0 8px #ff7dee;}
+.profile-tag{font-size:0.9rem;letter-spacing:0.1em;margin-bottom:14px;color:var(--pink-light);text-transform:uppercase;}
+.profile-bio{font-size:0.95rem;opacity:0.9;margin-bottom:24px;}
+.circle-links{display:flex;justify-content:center;gap:22px;margin-bottom:24px;}
+.circle-btn{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle,rgba(255,182,216,0.35),rgba(0,0,0,0.4));border:2px solid var(--pink-light);display:flex;justify-content:center;align-items:center;font-size:0.8rem;font-weight:700;text-decoration:none;color:#ffffff;transition:0.25s ease;box-shadow:0 0 22px rgba(255,105,180,0.6);}
+.circle-btn:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 0 35px rgba(255,105,180,0.9);}
+audio{width:100%;filter:drop-shadow(0 0 12px rgba(255,150,200,0.7));}
+</style>
+</head>
+<body>
+<main class="profile-card">
+<section class="avatar-orbit">
+<canvas id="neon-ring"></canvas>
+<div class="avatar-wrapper">
+<img src="https://xatimg.com/image/9p0teXIX55HG.png" />
+</div>
+</section>
+<h1 class="title">TUSIA<span class="heart">❤</span></h1>
+<p class="profile-tag">PINK</p>
+<p class="profile-bio">Energia kobiecości – róż, srebro i delikatna wibracja światła.</p>
+<div class="circle-links">
+<a href="#" class="circle-btn">Frends</a>
+<a href="#" class="circle-btn">Xat</a>
+<a href="#" class="circle-btn">Me</a>
+</div>
+<audio controls>
+<source src="https://files.catbox.moe/l8ppy9.mp3" type="audio/mpeg" />
+</audio>
+</main>
+<script>
+const canvas=document.getElementById("neon-ring");
+const ctx=canvas.getContext("2d");
+const SIZE=220;
+const RADIUS=95;
+let angle=0;
+function setupCanvas(){const dpr=window.devicePixelRatio||1;canvas.width=SIZE*dpr;canvas.height=SIZE*dpr;ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);}
+function drawRing(){
+ctx.clearRect(0,0,SIZE,SIZE);
+ctx.save();
+ctx.translate(SIZE/2,SIZE/2);
+ctx.rotate(angle);
+const grad=ctx.createLinearGradient(-RADIUS,0,RADIUS,0);
+grad.addColorStop(0,"rgba(255,130,200,0)");
+grad.addColorStop(0.25,"rgba(255,180,230,0.8)");
+grad.addColorStop(0.5,"rgba(230,230,255,1)");
+grad.addColorStop(0.75,"rgba(255,180,230,0.8)");
+grad.addColorStop(1,"rgba(255,130,200,0)");
+ctx.strokeStyle=grad;
+ctx.lineWidth=4;
+ctx.shadowBlur=25;
+ctx.shadowColor="rgba(255,150,220,0.95)";
+ctx.beginPath();
+ctx.arc(0,0,RADIUS,0,Math.PI*2);
+ctx.stroke();
+ctx.restore();
+angle+=0.02;
+requestAnimationFrame(drawRing);
+}
+setupCanvas();
+drawRing();
+</script>
+</body>
+</html>
