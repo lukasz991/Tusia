@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tusia</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-
 <style>
 :root{--pink:#ff69b4;--pink-light:#ffb7d9;--text-light:#ffffff;}
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -19,7 +18,6 @@ body{
   color:var(--text-light);
   overflow:hidden;
 }
-
 /* === CARD === */
 .profile-card{
   width:420px;
@@ -171,31 +169,47 @@ body{
   fill:#ff8ae8;
 }
 /* timeline */
-.neon-bar{
-  flex:1;
-  height:10px;
-  background:rgba(255,180,240,0.15);
-  border-radius:20px;
-  position:relative;
-  overflow:hidden;
-}
-.neon-fill{
-  width:0%;
-  height:100%;
-  background:linear-gradient(90deg,#ff4fcf,#ff95e8,#ffd8fa);
-  border-radius:20px;
-  box-shadow:0 0 12px rgba(255,100,200,0.8);
+.neon-bar {
+    position: relative;
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 0, 255, 0.15);
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.2),
+                0 0 25px rgba(255, 0, 255, 0.15);
 }
 
-.neon-dot{
-  width:14px;
-  height:14px;
-  background:#ffb0ef;
-  border-radius:50%;
-  position:absolute;
-  top:-2px;
-  left:0%;
-  box-shadow:0 0 10px #ff9ff0;
+/* neonowy pasek z animacją, „żyje” cały czas */
+.neon-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(
+        90deg,
+        #ff00e6,
+        #ff63ff,
+        #ffc5ff,
+        #ff63ff,
+        #ff00e6
+    );
+    background-size: 300% 100%;
+    border-radius: 30px;
+    box-shadow:
+        0 0 20px #ff40ff,
+        0 0 40px #ff80ff,
+        0 0 70px #ffc8ff;
+    animation: neonFlow 3.5s linear infinite;
+    transition: width 0.1s linear;
+}
+/* pulsujący laserowy efekt */
+@keyframes neonFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+/* 🔥 Kropka wyłączona w wersji neonowej (chcesz → mogę dać świecącą też) */
+.neon-dot {
+    display: none;
 }
 .circle-avatar {
   width: 72px;
@@ -284,8 +298,7 @@ function drawRing(){
   ctx.save();
   ctx.translate(SIZE/2,SIZE/2);
   ctx.rotate(angle);
-
-  const grad=ctx.createLinearGradient(-RADIUS,0,RADIUS,0);
+const grad=ctx.createLinearGradient(-RADIUS,0,RADIUS,0);
   grad.addColorStop(0,"rgba(255,130,200,0)");
   grad.addColorStop(0.25,"rgba(255,180,230,0.8)");
   grad.addColorStop(0.5,"rgba(255,255,255,1)");
@@ -313,7 +326,6 @@ const playBtn=document.getElementById("playBtn");
 const fill=document.getElementById("fill");
 const dot=document.getElementById("dot");
 const time=document.getElementById("time");
-
 function fmt(s){
 let m=Math.floor(s/60);
 let ss=Math.floor(s%60);
@@ -321,9 +333,7 @@ if(ss<10)ss="0"+ss;
 if(m<10)m="0"+m;
 return m+":"+ss;
 }
-
 playBtn.onclick=()=>{audio.paused?audio.play():audio.pause();};
-
 audio.ontimeupdate=()=>{
 let p=(audio.currentTime/audio.duration)*100;
 fill.style.width=p+"%";
