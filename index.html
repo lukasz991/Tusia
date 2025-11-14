@@ -139,11 +139,10 @@ body{
   transform:translateY(-3px) scale(1.06);
   box-shadow:0 0 35px rgba(255,105,180,0.9);
 }
-
-/* === NEON PLAYER === */
+/* === PINK NEON PLAYER === */
 .neon-player{
   width:100%;
-  height:45px;
+  height:40px;
   background:rgba(40,0,50,0.55);
   border:2px solid rgba(255,120,200,0.8);
   border-radius:40px;
@@ -154,11 +153,10 @@ body{
   box-shadow:0 0 25px rgba(255,80,180,0.7);
   backdrop-filter:blur(10px);
 }
-
 /* play button */
 .neon-play{
-  width:38px;
-  height:38px;
+  width:35px;
+  height:35px;
   border-radius:50%;
   border:2px solid rgba(255,120,200,0.9);
   display:flex;
@@ -167,13 +165,11 @@ body{
   cursor:pointer;
   box-shadow:0 0 15px rgba(255,100,200,0.8);
 }
-
 .neon-play svg{
   width:18px;
   height:18px;
   fill:#ff8ae8;
 }
-
 /* timeline */
 .neon-bar{
   flex:1;
@@ -183,7 +179,6 @@ body{
   position:relative;
   overflow:hidden;
 }
-
 .neon-fill{
   width:0%;
   height:100%;
@@ -202,60 +197,72 @@ body{
   left:0%;
   box-shadow:0 0 10px #ff9ff0;
 }
-
-.neon-time{
-  font-size:0.8rem;
+.circle-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid var(--pink-light);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  text-decoration: none;
+  font-size: 10px;
+  color: #fff;
+  padding-bottom: 4px;
+  font-weight: 700;
+  box-shadow: 0 0 20px rgba(255,105,180,0.7);
+  transition: 0.25s;
 }
+.circle-avatar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 35px rgba(255,105,180,1);
+}  
 </style>
 </head>
 <body>
-
 <main class="profile-card">
-
 <section class="avatar-orbit">
-<canvas id="neon-ring"></canvas>
-<div class="avatar-wrapper">
-<img src="https://xatimg.com/image/9p0teXIX55HG.png" />
-</div>
-</section>
+  <canvas id="neon-ring"></canvas>
 
+  <div class="avatar-wrapper">
+    <img src="https://xatimg.com/image/9p0teXIX55HG.png" />
+  </div>
+</section>
 <h1 class="title">TUSIA<span class="heart">♡</span></h1>
 <p class="profile-tag">PINK</p>
 <p class="profile-bio">Energia kobiecości.</p>
-
 <div class="circle-links">
-<a href="#" class="circle-btn">Frends</a>
-<a href="#" class="circle-btn">Xat</a>
-<a href="#" class="circle-btn">Me</a>
+<a href="https://xat.me/Lukasz" target="_blank" class="circle-avatar"
+     style="background-image:url('https://xatimg.com/image/DYdcGEajGoRx.png')">
+  </a>
+<a href="https://xat.me/Tusia" target="_blank" class="circle-avatar"
+     style="background-image:url('https://xatimg.com/image/9p0teXIX55HG.png')">
+  </a>
+<a href="https://xat.me/NICK3" target="_blank" class="circle-avatar"
+     style="background-image:url('https://xatimg.com/image/DYdcGEajGoRx.png')">
+</a>
 </div>
-
 <!-- === NEON PLAYER === -->
 <div class="neon-player">
-    <div class="neon-play" id="playBtn">
-        <!-- PLAY ICON -->
-        <svg id="playIcon" viewBox="0 0 24 24">
-            <polygon points="5,3 19,12 5,21"></polygon>
-        </svg>
-        <!-- PAUSE ICON -->
-        <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;">
-            <rect x="6" y="4" width="4" height="16"></rect>
-            <rect x="14" y="4" width="4" height="16"></rect>
-        </svg>
-    </div>
-    <div class="neon-bar">
-        <div class="neon-fill" id="fill"></div>
-        <div class="neon-dot" id="dot"></div>
-    </div>
-
-    <div id="time" class="neon-time">00:00 / 00:00</div>
-
-    <audio id="audio">
+<div class="neon-play" id="playBtn">
+<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"></polygon></svg>
+</div>
+<div class="neon-bar">
+<div class="neon-fill" id="fill"></div>
+<div class="neon-dot" id="dot"></div>
+</div>
+<div id="time" class="neon-time">00:00 / 00:00</div>
+<audio id="audio">
+<source src="https://files.catbox.moe/l8ppy9.mp3" type="audio/mpeg">
+</audio>
+</div
+<audio id="audio">
         <source src="https://files.catbox.moe/l8ppy9.mp3" type="audio/mpeg">
     </audio>
 </div>
-
 </main>
-
 <script>
 /* === RING ANIMATION === */
 const canvas=document.getElementById("neon-ring");
@@ -298,15 +305,11 @@ function drawRing(){
   angle+=0.02;
   requestAnimationFrame(drawRing);
 }
-
 setupCanvas();
 drawRing();
-
 /* === PLAYER SCRIPT === */
 const audio=document.getElementById("audio");
 const playBtn=document.getElementById("playBtn");
-const playIcon=document.getElementById("playIcon");
-const pauseIcon=document.getElementById("pauseIcon");
 const fill=document.getElementById("fill");
 const dot=document.getElementById("dot");
 const time=document.getElementById("time");
@@ -319,25 +322,8 @@ if(m<10)m="0"+m;
 return m+":"+ss;
 }
 
-/* === PLAY / PAUSE TOGGLE === */
-playBtn.onclick=()=>{
-    if(audio.paused){
-        audio.play();
-        playIcon.style.display="none";
-        pauseIcon.style.display="block";
-    } else {
-        audio.pause();
-        playIcon.style.display="block";
-        pauseIcon.style.display="none";
-    }
-};
-/* RESET ICON ON END */
-audio.onended=()=>{
-playIcon.style.display="block";
-pauseIcon.style.display="none";
-};
+playBtn.onclick=()=>{audio.paused?audio.play():audio.pause();};
 
-/* TIMELINE UPDATE */
 audio.ontimeupdate=()=>{
 let p=(audio.currentTime/audio.duration)*100;
 fill.style.width=p+"%";
